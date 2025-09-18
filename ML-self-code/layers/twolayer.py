@@ -1,7 +1,7 @@
 import numpy as np
 from common.helper import *
 
-class TwoLayerNet:
+class TwoLayerNetOld:
     def __init__(self, input_size = 784, hidden_size = 50, output_size = 10, weight = 0.01):
         self.network = {}
         self.network['W1'] = np.random.randn(input_size, hidden_size) * weight

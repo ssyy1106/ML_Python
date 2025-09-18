@@ -1,4 +1,4 @@
-from layers.twolayer import TwoLayerNet
+from layers.twolayer import TwoLayerNetOld
 import numpy as np
 from mnist.mnist import load_mnist
 import matplotlib.pyplot as plt
@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 (x_train, t_train), (x_test, t_test) = load_mnist(flatten=True,normalize=True, one_hot_label=True)
 batch_size = 100
 learning_rate = 0.1
-iters_num = 10000
-two_layer_net = TwoLayerNet()
+iters_num = 100000
+two_layer_net = TwoLayerNetOld()
 
 res = []
 res_train = []

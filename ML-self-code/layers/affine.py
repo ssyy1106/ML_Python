@@ -1,22 +1,30 @@
 import numpy as np
 
 class Affine:
-    def __init__(self, input_dim, output_dim):
-        self.W = np.random.randn(input_dim, output_dim) * 0.01
-        self.b = np.zeros((1, output_dim))
-        self.cache = None
+    def __init__(self, W, b):
+        self.W =W
+        self.b = b
+        
+        self.x = None
+        self.original_x_shape = None
+        # 权重和偏置参数的导数
         self.dW = None
-        self.db = None  # Gradient of weights
-    
-    def forward(self, x):
-        out = x.dot(self.W) + self.b
-        self.cache = x
-        return out
-    
-    def backward(self, dout):
-        x = self.cache
-        self.dW = x.T.dot(dout)
-        self.db = np.sum(dout, axis=0, keepdims=True)
-        dx = dout.dot(self.W.T)
-        return dx
+        self.db = None
 
+    def forward(self, x):
+        # 对应张量
+        self.original_x_shape = x.shape
+        x = x.reshape(x.shape[0], -1)
+        self.x = x
+
+        out = np.dot(self.x, self.W) + self.b
+
+        return out
+
+    def backward(self, dout):
+        dx = np.dot(dout, self.W.T)
+        self.dW = np.dot(self.x.T, dout)
+        self.db = np.sum(dout, axis=0)
+        
+        dx = dx.reshape(*self.original_x_shape)  # 还原输入数据的形状（对应张量）
+        return dx
